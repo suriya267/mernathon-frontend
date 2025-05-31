@@ -6,6 +6,7 @@ export const ProductContext = createContext();
 
 const ProductContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { fetchProducts: fetchProductsFromHook, fetchProductById } =
@@ -21,6 +22,8 @@ const ProductContextProvider = ({ children }) => {
           ...options,
         });
         setProducts(productsData.products || []);
+        setTotalPages(productsData.totalPages)
+
       } catch (err) {
         setError(err.message || "Failed to fetch products");
         toast.error(err.message || "Failed to fetch products");
@@ -37,6 +40,7 @@ const ProductContextProvider = ({ children }) => {
 
   const value = {
     products,
+    totalPages,
     setProducts,
     fetchProducts,
     fetchProductById,

@@ -37,7 +37,7 @@ const App = () => {
     <div>
       <ToastContainer />
       <NavBar />
-      <SearchBar />
+      {/* <SearchBar /> */}
       <main className="w-full sm:max-w-[90%] mx-auto">
         <Suspense
           fallback={<div className="text-center py-10">Loading...</div>}
@@ -49,9 +49,9 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/product/:productId" element={<Product />} />
             <Route path="/cart" element={haveAccess(<Cart />)} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/place-order" element={<PlaceOrder />} />
-            <Route path="/orders" element={<Orders />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/place-order" element={haveAccess(<PlaceOrder />)} />
+            <Route path="/orders" element={haveAccess(<Orders />)} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/profile" element={haveAccess(<Profile />)} />

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { getAuthToken } from "../utils/localStorage";
 
 const Login = () => {
   const { currentState, setCurrentState, form, onChange, onSubmitHandler } =
@@ -23,6 +24,12 @@ const Login = () => {
       onSubmitHandler()
     }
   }, [isValid, turnSubmit])
+
+  useEffect(() => {
+    if (getAuthToken()) {
+      localStorage.clear()
+    }
+  }, [])
 
   return (
     <form

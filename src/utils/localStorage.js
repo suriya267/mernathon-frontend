@@ -5,7 +5,9 @@ const setAuthToken = (value) => {
 
 const getAuthToken = () => {
   const stringifyAuthToken = sessionStorage.getItem("token");
-  return JSON.parse(stringifyAuthToken);
+  return stringifyAuthToken !== "undefined"
+    ? JSON.parse(stringifyAuthToken)
+    : null;
 };
 
 export { setAuthToken, getAuthToken };

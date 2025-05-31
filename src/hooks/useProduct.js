@@ -4,11 +4,19 @@ import axiosInstance from "./../utils/axiosInstance";
 
 const useProduct = () => {
   const fetchProducts = useCallback(async (options = {}) => {
-    const { sort = "", category = "", subCategory = "" } = options;
+    const {
+      page = 1,
+      search = "",
+      sort = "",
+      category = "",
+      subCategory = "",
+    } = options;
 
     try {
       const response = await axiosInstance.get("/product", {
         params: {
+          page,
+          search,
           sort,
           category,
           subCategory,
@@ -17,6 +25,7 @@ const useProduct = () => {
 
       return {
         products: response.data.products,
+        totalPages:response.data.totalPages,
       };
     } catch (err) {
       const message = err.response?.data?.message || "Failed to fetch products";
