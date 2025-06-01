@@ -6,6 +6,7 @@ import { CartContext } from "../context/CartContext";
 import { WishlistContext } from "../context/WishlistContext";
 import { HiOutlineHeart } from "react-icons/hi";
 import { AuthContext } from "../context/AuthContext";
+import { getAuthToken } from "../utils/localStorage";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -14,7 +15,9 @@ const NavBar = () => {
   const { getCartCount } = useContext(CartContext);
   const { wishlistItems, setWishlistItems } = useContext(WishlistContext);
 
-  const isLoggedIn = !!localStorage.getItem("token");
+  const isLoggedIn = getAuthToken();
+  
+  console.log("isLoggedIn", isLoggedIn);
 
   const getWishlistCount = () => Object.keys(wishlistItems || {}).length;
 

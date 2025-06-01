@@ -26,6 +26,8 @@ const Wishlist = lazy(() => import("./pages/WishList"));
 const App = () => {
 
   const haveAccess = (page) => {
+    console.log("getAuthToken()", getAuthToken());
+
     if (getAuthToken()) {
       return page;
     } else {

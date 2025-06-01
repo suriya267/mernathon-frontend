@@ -25,12 +25,6 @@ const Login = () => {
     }
   }, [isValid, turnSubmit])
 
-  useEffect(() => {
-    if (getAuthToken()) {
-      localStorage.clear()
-    }
-  }, [])
-
   return (
     <form
       onSubmit={handlePasswordValidation}

@@ -1,10 +1,10 @@
 const setAuthToken = (value) => {
   const stringifyAuthToken = JSON.stringify(value);
-  sessionStorage.setItem("token", stringifyAuthToken);
+  localStorage.setItem("token", stringifyAuthToken);
 };
 
 const getAuthToken = () => {
-  const stringifyAuthToken = sessionStorage.getItem("token");
+  const stringifyAuthToken = localStorage.getItem("token");
   return stringifyAuthToken !== "undefined"
     ? JSON.parse(stringifyAuthToken)
     : null;
