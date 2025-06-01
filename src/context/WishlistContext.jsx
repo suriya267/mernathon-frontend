@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
+import { getAuthToken } from "../utils/localStorage";
 
 export const WishlistContext = createContext();
 
@@ -12,12 +13,10 @@ const WishlistContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isFetched, setIsFetched] = useState(false);
 
-  const navigate = useNavigate();
+  console.log("wishlistItems", wishlistItems);
 
-  const getAuthToken = () => {
-    const token = localStorage.getItem("token");
-    return token;
-  };
+
+  const navigate = useNavigate();
 
   const getWishlist = useCallback(async () => {
     const token = getAuthToken();
@@ -29,6 +28,9 @@ const WishlistContextProvider = ({ children }) => {
     setError(null);
     try {
       const response = await axiosInstance.get(`/wishlist`);
+
+      console.log("response", response);
+
       const items = response.data.items || [];
       setWishlistData(items);
       setWishlistItems(
@@ -39,6 +41,8 @@ const WishlistContextProvider = ({ children }) => {
       );
       setIsFetched(true);
     } catch (err) {
+      console.log("fetch error---->");
+
       const errorMsg = err.response?.data?.error || "Failed to fetch wishlist";
       setError(errorMsg);
     } finally {
@@ -50,7 +54,7 @@ const WishlistContextProvider = ({ children }) => {
     if (getAuthToken()) {
       getWishlist();
     }
-  }, [getWishlist]);
+  }, []);
 
   const removeFromWishlist = async (productId) => {
     const token = getAuthToken();
@@ -88,7 +92,29 @@ const WishlistContextProvider = ({ children }) => {
     }
   };
 
+
+  const addToWishlist = async (productId) => {
+    try {
+      const response = await axiosInstance.post(`/wishlist/add`, {
+        productId,
+      });
+
+      const items = response.data.items || [];
+      setWishlistData(items);
+      setWishlistItems(
+        items.reduce((acc, item) => {
+          acc[item.productId._id] = true;
+          return acc;
+        }, {})
+      );
+
+    } catch (error) {
+      console.log("error in addToWishlist::", error);
+    }
+  }
+
   const value = {
+    addToWishlist,
     wishlistData,
     wishlistItems,
     setWishlistItems,

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "./ProductContext";
 import axiosInstance from "../utils/axiosInstance";
+import { getAuthToken } from "../utils/localStorage";
 
 export const CartContext = createContext();
 
@@ -14,10 +15,6 @@ const CartContextProvider = ({ children }) => {
   const delivery_fee = 10;
   const navigate = useNavigate();
   const { products } = useContext(ProductContext);
-
-  const getAuthToken = () => {
-    return localStorage.getItem("token");
-  };
 
   const getCart = async () => {
     const token = getAuthToken();

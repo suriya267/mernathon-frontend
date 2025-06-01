@@ -17,9 +17,15 @@ const ProductItem = ({ id, image, name, price }) => {
   const handleWishlistClick = (e) => {
     e.preventDefault();
 
+    console.log("isInWishlist", isInWishlist);
+
+    console.log("id---->", id);
+
+
     if (isInWishlist) {
       removeFromWishlist(id);
     } else {
+      addToWishlist(id);
       setWishlistItems((prevWishlistItems) => ({
         ...prevWishlistItems,
         [id]: true,
@@ -33,7 +39,7 @@ const ProductItem = ({ id, image, name, price }) => {
         <div className="overflow-hidden">
           <img
             className="transition ease-in-out hover:scale-110"
-            src={image && image[0] &&`public/images/${image[0]}.png`}
+            src={image && image[0] && `/src/assets/${image[0]}.png`}
             alt={name || "Product"}
           />
         </div>

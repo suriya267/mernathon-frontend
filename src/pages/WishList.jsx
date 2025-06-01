@@ -17,7 +17,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     fetchWishlist();
-  }, [fetchWishlist]);
+  }, []);
 
   const toggleWishlist = (itemId) => {
     if (wishlistItems[itemId]) {
@@ -26,6 +26,11 @@ const Wishlist = () => {
       addToWishlist(itemId);
     }
   };
+
+
+  const addToCart = (id) => {
+
+  }
 
   if (isLoading) {
     return <p className="text-center text-gray-500">Loading wishlist...</p>;
@@ -55,9 +60,7 @@ const Wishlist = () => {
             >
               <img
                 className="w-24 h-24 object-cover"
-                src={`${import.meta.env.VITE_SERVER_URL}/images/${
-                  item.productId.image[0]
-                }`}
+                src={`/src/assets/${item.productId.image[0]}.png`}
                 alt={item.productId.name || "Product"}
               />
               <div className="flex-1">
@@ -76,6 +79,7 @@ const Wishlist = () => {
                 <button
                   className="px-4 py-2 text-sm text-white bg-black active:bg-gray-700"
                   aria-label="Add to cart"
+                  onClick={() => addToCart(item.productId._id)}
                 >
                   ADD TO CART
                 </button>
